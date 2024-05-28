@@ -1,0 +1,22 @@
+[package]
+name = "rantz_random"
+version = "0.3.6"
+authors = ["Robert Gardner'"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/BobG1983/rantz_random"
+homepage = "https://github.com/BobG1983/rantz_random"
+keywords = ["gamedev", "bevy"]
+categories = ["game-engines"]
+description = "Mostly just a wrapper around fastrand for a bunch of types. Supports bevy and rantz_spatial2d."
+
+[dependencies]
+fastrand = "2.1.0"
+rantz_spatial2d = { version = "0.3.6", optional = true }
+bevy = { version = "0.13.2", default-features = false, optional = true }
+
+[features]
+default = ["spatial2d", "bevy"]
+spatial2d = ["rantz_spatial2d"]
+bevy = ["bevy/bevy_render"]
