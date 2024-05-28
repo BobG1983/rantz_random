@@ -102,6 +102,13 @@ mod spatial2d {
             min + (diff * f32::random())
         }
     }
+
+    impl RandomRange for Position2D {
+        fn random_range(min: Position2D, max: Position2D) -> Position2D {
+            let diff = max - min;
+            min + (diff * Position2D::new(f32::random(), f32::random()))
+        }
+    }
 }
 
 #[cfg(feature = "bevy")]
