@@ -1993,7 +1993,7 @@ checksum = "9c8a99fddc9f0ba0a85884b8d14e3592853e787d581ca1816c91349b10e4eeab"
 
 [[package]]
 name = "rantz_random"
-version = "0.3.6"
+version = "0.3.7"
 dependencies = [
  "bevy",
  "fastrand",
@@ -2002,9 +2002,9 @@ dependencies = [
 
 [[package]]
 name = "rantz_spatial2d"
-version = "0.3.6"
+version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c7dae2ab8315182587887cd4b15ca11a715ed9c4cf44727963de736c5e0cf50e"
+checksum = "387377766b72dffd8ffd398cc3e73607f900c07972087311ba10b066f35a2126"
 dependencies = [
  "bevy",
 ]
