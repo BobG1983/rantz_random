@@ -72,6 +72,14 @@ where
         }
     }
 
+    pub fn from_vec(vec: Vec<(T, u32)>) -> Self {
+        let mut table = Self::new();
+        for (value, weight) in vec {
+            table.insert(value, weight);
+        }
+        table
+    }
+
     pub fn insert(&mut self, value: T, weight: u32) {
         if let Some(index) = self.values.iter().position(|v| v == &value) {
             let old_weight = self.weights[index];
