@@ -21,6 +21,8 @@ Can generate random values in a range for:
 
 Can shuffle anything `Clone + IntoIterator<T> + FromIterator<T>` as well as returning a random element, or random index.
 
+Also includes a `WeightedTable` class for use in weighted random generation.
+
 ## Usage
 
 Add to your `Cargo.toml`. Use `rantz_random::*;` to get access to the traits that define random generation.
