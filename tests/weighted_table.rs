@@ -250,4 +250,14 @@ mod tests {
         assert_eq!(table.get_entry(0), Some((1, 20)));
         assert_eq!(table.get_entry(1), Some((2, 20)));
     }
+
+    #[test]
+    fn handles_exact_random_value() {
+        let mut table = WeightedTable::new();
+        table.insert(1, 10);
+        table.insert(2, 10);
+
+        assert_eq!(table.random_with(10), (1, 10));
+        assert_eq!(table.random_with(20), (2, 10));
+    }
 }

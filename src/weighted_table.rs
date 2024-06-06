@@ -159,6 +159,18 @@ where
         }
     }
 
+    pub fn random_with(&self, n: u32) -> WeightedItem<T> {
+        let mut n = n;
+        for (i, weight) in self.weights.iter().enumerate() {
+            if &n <= weight {
+                return self.get_entry(i).unwrap();
+            } else {
+                n -= weight;
+            }
+        }
+        unreachable!();
+    }
+
     pub fn iter(&self) -> impl Iterator<Item = WeightedItemRef<T>> {
         WeightedTableIter {
             table: self,
@@ -288,14 +300,6 @@ where
     T: Clone + PartialEq,
 {
     fn random(&self) -> Self::Item {
-        let mut n = u32::random_range(0, self.total_weight as u32);
-        for (i, weight) in self.weights.iter().enumerate() {
-            if &n < weight {
-                return self.get_entry(i).unwrap();
-            } else {
-                n -= weight;
-            }
-        }
-        unreachable!();
+        self.random_with(u32::random_range(0, self.total_weight as u32))
     }
 }
