@@ -1,6 +1,6 @@
 # rantz_random
 
-A simple Rust library for generating random values using (fastrand)[https://github.com/smol-rs/fastrand]. Basically just a fastrand wrapper for a few additional types at the moment. Likely to grow over time. Designed for use with (Bevy)[https://www.bevyengine.org].
+A simple Rust library for generating random values using [fastrand](https://github.com/smol-rs/fastrand). Basically just a fastrand wrapper for a few additional types at the moment. Likely to grow over time. Designed for use with [Bevy](https://www.bevyengine.org).
 
 Can generate random values for:
 
