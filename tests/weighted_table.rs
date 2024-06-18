@@ -71,6 +71,21 @@ mod tests {
     }
 
     #[test]
+    fn removing_each_removes_from_values_and_weights() {
+        let mut table = WeightedTable::new();
+
+        table.insert(1, 10);
+        table.insert(2, 20);
+
+        let values = vec![1, 2];
+        table.remove_each(values);
+
+        assert_eq!(table.weights(), &Vec::<u32>::new());
+        assert_eq!(table.total_weight(), 0);
+        assert_eq!(table.values(), &Vec::<u32>::new());
+    }
+
+    #[test]
     fn clear_removes_from_values_and_weights() {
         let mut table = WeightedTable::new();
 

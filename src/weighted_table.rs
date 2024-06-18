@@ -102,6 +102,12 @@ where
         }
     }
 
+    pub fn remove_each(&mut self, other: impl IntoIterator<Item = T>) {
+        for value in other {
+            self.remove(&value);
+        }
+    }
+
     pub fn clear(&mut self) {
         self.weights.clear();
         self.total_weight = 0;
