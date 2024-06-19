@@ -1,4 +1,4 @@
-use crate::{random_traits::RandomContainer, Random, Shuffle};
+use crate::{random_traits::RandomContainer, Random};
 
 impl Random for bool {
     fn random() -> bool {
@@ -90,14 +90,7 @@ impl Random for usize {
     }
 }
 
-impl<T> RandomContainer<T> for Vec<T>
-where
-    T: Clone,
-{
-    fn random(&self) -> Self::Item {
-        self.iter().nth(self.random_index()).unwrap().clone()
-    }
-}
+impl<T> RandomContainer<T> for Vec<T> where T: Clone {}
 
 #[cfg(feature = "spatial2d")]
 mod spatial2d {

@@ -66,9 +66,9 @@ where
 {
     pub fn new() -> Self {
         Self {
-            weights: Vec::new(),
+            weights: Vec::<u32>::new(),
             total_weight: 0,
-            values: Vec::new(),
+            values: Vec::<T>::new(),
         }
     }
 
@@ -189,11 +189,11 @@ where
 
     pub fn combine(&mut self, other: Self) {
         self.total_weight += other.total_weight;
-        for (v, w) in other {
-            if let Some(index) = self.values.iter().position(|x| x == &v) {
+        for (v, w) in other.iter() {
+            if let Some(index) = self.values.iter().position(|x| x == v) {
                 self.weights[index] += w;
             } else {
-                self.weights.push(w);
+                self.weights.push(*w);
                 self.values.push(v.clone());
             }
         }
@@ -204,12 +204,12 @@ impl<T> IntoIterator for WeightedTable<T>
 where
     T: PartialEq + Clone,
 {
-    type Item = WeightedItem<T>;
-    type IntoIter = WeightedTableIntoIter<T>;
+    type Item = T;
+    type IntoIter = WeightedTableTupleIntoIter<T>;
 
     fn into_iter(self) -> Self::IntoIter {
         let size = self.values.len();
-        WeightedTableIntoIter {
+        WeightedTableTupleIntoIter {
             table: self,
             index: 0,
             size,
@@ -217,7 +217,7 @@ where
     }
 }
 
-pub struct WeightedTableIntoIter<T>
+pub struct WeightedTableTupleIntoIter<T>
 where
     T: PartialEq + Clone,
 {
@@ -226,18 +226,17 @@ where
     size: usize,
 }
 
-impl<T> Iterator for WeightedTableIntoIter<T>
+impl<T> Iterator for WeightedTableTupleIntoIter<T>
 where
     T: PartialEq + Clone,
 {
-    type Item = WeightedItem<T>;
+    type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.index < self.size {
             let value = self.table.values[self.index].clone();
-            let weight = self.table.weights[self.index].clone();
             self.index += 1;
-            Some((value, weight))
+            Some(value)
         } else {
             None
         }
@@ -299,7 +298,8 @@ impl<T> RandomContainer<T> for WeightedTable<T>
 where
     T: Clone + PartialEq,
 {
-    fn random(&self) -> Self::Item {
+    fn random(&self) -> T {
         self.random_with(u32::random_range(0, self.total_weight as u32))
+            .0
     }
 }

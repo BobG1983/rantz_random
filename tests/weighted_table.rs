@@ -223,9 +223,8 @@ mod tests {
         let mut table = WeightedTable::new();
         table.insert(1, 10);
 
-        for (v, w) in table {
+        for v in table {
             assert!(v == 1);
-            assert!(w == 10);
         }
     }
 
@@ -234,7 +233,7 @@ mod tests {
         let mut table = WeightedTable::new();
         table.insert(1, 10);
 
-        assert_eq!(table.random(), (1, 10));
+        assert_eq!(table.random(), 1);
     }
 
     #[test]
