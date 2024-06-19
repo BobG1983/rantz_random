@@ -7,6 +7,7 @@ mod weighted_table;
 pub use random_traits::Random;
 pub use random_traits::RandomContainer;
 pub use random_traits::RandomRange;
+pub use random_traits::RandomWeightedContainer;
 pub use shuffle_trait::Shuffle;
 pub use weighted_table::WeightedTable;
 

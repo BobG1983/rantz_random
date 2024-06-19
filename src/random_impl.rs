@@ -90,7 +90,12 @@ impl Random for usize {
     }
 }
 
-impl<T> RandomContainer<T> for Vec<T> where T: Clone {}
+impl<T, U> RandomContainer<T> for U
+where
+    U: Clone + IntoIterator<Item = T>,
+    T: Clone,
+{
+}
 
 #[cfg(feature = "spatial2d")]
 mod spatial2d {
@@ -139,9 +144,8 @@ mod spatial2d {
 
 #[cfg(feature = "bevy")]
 mod bevy {
-    use crate::{random_traits::RandomContainer, Random};
-    use bevy::{prelude::*, utils::HashSet};
-    use std::hash::Hash;
+    use crate::Random;
+    use bevy::prelude::*;
 
     impl Random for Color {
         fn random() -> Color {
@@ -227,16 +231,6 @@ mod bevy {
             let z = fastrand::u32(u32::MIN..u32::MAX);
             let w = fastrand::u32(u32::MIN..u32::MAX);
             UVec4::new(x, y, z, w)
-        }
-    }
-
-    impl<T> RandomContainer<T> for HashSet<T>
-    where
-        T: Clone + Eq + Hash,
-    {
-        fn random(&self) -> Self::Item {
-            let index = fastrand::usize(0..self.len());
-            self.iter().nth(index).unwrap().clone()
         }
     }
 }

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use rantz_random::{RandomContainer, WeightedTable};
+    use rantz_random::{RandomContainer, RandomWeightedContainer, WeightedTable};
 
     #[test]
     fn inserting_adds_to_values_and_weights() {
@@ -9,7 +9,7 @@ mod tests {
         table.insert(1, 10);
 
         assert_eq!(table.weights(), &vec![10]);
-        assert_eq!(table.total_weight(), 10);
+        assert_eq!(table.max_weight(), 10);
         assert_eq!(table.values(), &vec![1]);
     }
 
@@ -22,7 +22,7 @@ mod tests {
         table.insert(3, 30);
 
         assert_eq!(table.weights(), &vec![10, 20, 30]);
-        assert_eq!(table.total_weight(), 60);
+        assert_eq!(table.max_weight(), 60);
         assert_eq!(table.values(), &vec![1, 2, 3]);
     }
 
@@ -36,7 +36,7 @@ mod tests {
         table.remove(&1);
 
         assert_eq!(table.weights(), &vec![20]);
-        assert_eq!(table.total_weight(), 20);
+        assert_eq!(table.max_weight(), 20);
         assert_eq!(table.values(), &vec![2]);
     }
 
@@ -51,7 +51,7 @@ mod tests {
         table.remove(&1);
 
         assert_eq!(table.weights(), &vec![20, 30]);
-        assert_eq!(table.total_weight(), 50);
+        assert_eq!(table.max_weight(), 50);
         assert_eq!(table.values(), &vec![2, 3]);
     }
 
@@ -66,7 +66,7 @@ mod tests {
         table.remove(&2);
 
         assert_eq!(table.weights(), &Vec::<u32>::new());
-        assert_eq!(table.total_weight(), 0);
+        assert_eq!(table.max_weight(), 0);
         assert_eq!(table.values(), &Vec::<u32>::new());
     }
 
@@ -81,7 +81,7 @@ mod tests {
         table.clear();
 
         assert_eq!(table.weights(), &Vec::<u32>::new());
-        assert_eq!(table.total_weight(), 0);
+        assert_eq!(table.max_weight(), 0);
         assert_eq!(table.values(), &Vec::<u32>::new());
     }
 
@@ -93,7 +93,7 @@ mod tests {
         table.insert(1, 20);
 
         assert_eq!(table.weights(), &vec![20]);
-        assert_eq!(table.total_weight(), 20);
+        assert_eq!(table.max_weight(), 20);
         assert_eq!(table.values(), &vec![1]);
     }
 
@@ -233,7 +233,33 @@ mod tests {
         let mut table = WeightedTable::new();
         table.insert(1, 10);
 
-        assert_eq!(table.random(), 1);
+        assert_eq!(table.random(), Some(1));
+    }
+
+    #[test]
+    fn empty_table_returns_none() {
+        let table = WeightedTable::<u32>::new();
+
+        assert_eq!(table.random(), None);
+        assert_eq!(table.weighted_random(), None);
+        assert_eq!(table.weighted_random_with_weight(1), None);
+    }
+
+    #[test]
+    fn implements_weighted_random() {
+        let mut table = WeightedTable::new();
+        table.insert(1, 10);
+
+        assert_eq!(table.weighted_random(), Some(1));
+    }
+
+    #[test]
+    fn weighted_random_returns_correct_value() {
+        let mut table = WeightedTable::new();
+        table.insert(1, 10);
+        table.insert(2, 10);
+
+        assert_eq!(table.weighted_random_with_weight(20), Some(2));
     }
 
     #[test]

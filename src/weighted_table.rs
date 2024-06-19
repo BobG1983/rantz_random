@@ -1,4 +1,4 @@
-use crate::random_traits::{RandomContainer, RandomRange};
+use crate::random_traits::RandomWeightedContainer;
 use std::{marker::PhantomData, slice::IterMut};
 
 /// WeightedTable
@@ -106,18 +106,6 @@ where
         self.weights.clear();
         self.total_weight = 0;
         self.values.clear();
-    }
-
-    pub fn weights(&self) -> &Vec<u32> {
-        &self.weights
-    }
-
-    pub fn total_weight(&self) -> u32 {
-        self.total_weight
-    }
-
-    pub fn values(&self) -> &Vec<T> {
-        &self.values
     }
 
     pub fn get_entry(&self, index: usize) -> Option<WeightedItem<T>> {
@@ -294,12 +282,19 @@ where
     }
 }
 
-impl<T> RandomContainer<T> for WeightedTable<T>
+impl<T> RandomWeightedContainer<T> for WeightedTable<T>
 where
     T: Clone + PartialEq,
 {
-    fn random(&self) -> T {
-        self.random_with(u32::random_range(0, self.total_weight as u32))
-            .0
+    fn max_weight(&self) -> u32 {
+        self.total_weight
+    }
+
+    fn weights(&self) -> &Vec<u32> {
+        &self.weights
+    }
+
+    fn values(&self) -> &Vec<T> {
+        &self.values
     }
 }
