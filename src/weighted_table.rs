@@ -41,7 +41,7 @@ use std::{marker::PhantomData, slice::IterMut};
 /// }
 ///
 /// for value in table { // Must be done last as consumes the table
-///   println!("Owned {} has a weight of {}", value, weight);
+///   println!("Owned {}", value);
 /// }
 /// ```
 ///
