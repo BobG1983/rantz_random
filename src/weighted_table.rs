@@ -295,6 +295,19 @@ where
     }
 }
 
+impl<'a, T> FromIterator<(T, &'a u32)> for WeightedTable<T>
+where
+    T: PartialEq + Clone,
+{
+    fn from_iter<I: IntoIterator<Item = (T, &'a u32)>>(iter: I) -> Self {
+        let mut table = WeightedTable::new();
+        for (value, weight) in iter {
+            table.insert(value, weight.clone());
+        }
+        table
+    }
+}
+
 impl<T> RandomWeightedContainer<T> for WeightedTable<T>
 where
     T: Clone + PartialEq,
