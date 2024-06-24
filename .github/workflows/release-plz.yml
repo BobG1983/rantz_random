@@ -12,7 +12,7 @@ on:
 jobs:
   release-plz:
     name: Release-plz
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,6 +29,8 @@ jobs:
           key: ${{ runner.os }}-cargo-build-stable-${{ hashFiles('**/Cargo.toml') }}
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@nightly
+      - name: Install Linux dependencies
+        uses: ./.github/actions/install-linux-deps
       - name: Run Cargo Test
         run: cargo test
       - name: Run release-plz

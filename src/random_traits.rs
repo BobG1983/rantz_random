@@ -25,13 +25,13 @@ where
     fn random_index(&self) -> Option<usize> {
         let size = self.clone().into_iter().count();
         if size == 0 {
-            return None;
+            None
         } else {
-            return Some(fastrand::usize(1..=size) - 1);
+            Some(fastrand::usize(1..=size) - 1)
         }
     }
     fn random_element(&self) -> Option<Self::Item> {
-        return self.random_with_index().map(|(_, item)| item);
+        self.random_with_index().map(|(_, item)| item)
     }
 }
 

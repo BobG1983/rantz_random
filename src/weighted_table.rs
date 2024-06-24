@@ -60,16 +60,25 @@ pub type WeightedItem<T> = (T, u32);
 pub type WeightedItemRef<'a, T> = (&'a T, &'a u32);
 pub type WeightedItemRefMut<'a, T> = (&'a mut T, &'a mut u32);
 
-impl<T> WeightedTable<T>
+impl<T> Default for WeightedTable<T>
 where
     T: PartialEq + Clone,
 {
-    pub fn new() -> Self {
+    fn default() -> Self {
         Self {
             weights: Vec::<u32>::new(),
             total_weight: 0,
             values: Vec::<T>::new(),
         }
+    }
+}
+
+impl<T> WeightedTable<T>
+where
+    T: PartialEq + Clone,
+{
+    pub fn new() -> Self {
+        Default::default()
     }
 
     pub fn from_vec(vec: Vec<(T, u32)>) -> Self {
@@ -110,7 +119,7 @@ where
 
     pub fn get_entry(&self, index: usize) -> Option<WeightedItem<T>> {
         if index < self.values.len() {
-            Some((self.values[index].clone(), self.weights[index].clone()))
+            Some((self.values[index].clone(), self.weights[index]))
         } else {
             None
         }
@@ -302,7 +311,7 @@ where
     fn from_iter<I: IntoIterator<Item = (T, &'a u32)>>(iter: I) -> Self {
         let mut table = WeightedTable::new();
         for (value, weight) in iter {
-            table.insert(value, weight.clone());
+            table.insert(value, *weight);
         }
         table
     }

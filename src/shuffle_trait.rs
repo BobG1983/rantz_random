@@ -7,11 +7,11 @@ where
     fn shuffle(&mut self) {
         let mut vec = self.clone().into_iter().collect::<Vec<_>>();
         vec.shuffle();
-        *self = Self::from_iter(vec.into_iter());
+        *self = Self::from_iter(vec);
     }
     fn shuffled(&self) -> Self {
         let mut vec = self.clone().into_iter().collect::<Vec<_>>();
         vec.shuffle();
-        Self::from_iter(vec.into_iter())
+        Self::from_iter(vec)
     }
 }
