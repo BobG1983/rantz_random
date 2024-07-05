@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0](https://github.com/BobG1983/rantz_random/compare/v1.0.0...v1.1.0) - 2024-07-05
+
+### Other
+- Updating rantz_spatial2d
+
 ## [0.4.4](https://github.com/BobG1983/rantz_random/compare/v0.4.3...v0.4.4) - 2024-06-19
 
 ### Other
