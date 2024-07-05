@@ -149,7 +149,7 @@ mod bevy {
 
     impl Random for Color {
         fn random() -> Color {
-            Color::rgba(f32::random(), f32::random(), f32::random(), 1.0)
+            Color::srgba(f32::random(), f32::random(), f32::random(), 1.0)
         }
     }
 
